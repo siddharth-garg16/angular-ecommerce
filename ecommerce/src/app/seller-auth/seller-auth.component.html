@@ -1,36 +1,34 @@
-<form id="sign-up">
+<form id="sign-up" (ngSubmit)="signUp()">
     <mat-card>
-        <div id="form-heading"><h1>Seller Registration</h1></div>
+        <div id="form-heading">
+            <img mat-card-image src="../../assets/seller.svg" alt="seller">
+            <h2>Seller Registration</h2>
+        </div>
         <mat-form-field appearance="outline">
             <mat-label>Registered Seller Name</mat-label>
-            <input matInput type="text">
+            <input matInput type="text" name="sellerName">
             <mat-error>Seller name is required</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
-            <input matInput type="email">
+            <input matInput type="email" name="email">
             <mat-error>Email is required</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
-            <mat-label>Contact</mat-label>
-            <input matInput type="number">
-            <mat-error>Contact is required</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
             <mat-label>GST Number</mat-label>
-            <input matInput type="text">
+            <input matInput type="text" name="gst">
             <mat-error>GST number is required</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input matInput type="password">
+            <input matInput type="password" name="password">
             <mat-error>Password is required</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
             <mat-label>Confirm Password</mat-label>
-            <input matInput type="password">
+            <input matInput type="password" name="confrimPassword">
             <mat-error>Confirmation password is required</mat-error>
         </mat-form-field>
-        <button mat-raised-button color="accent">Register</button>
+        <button mat-raised-button type="submit" color="accent">Register</button>
     </mat-card>
 </form>
