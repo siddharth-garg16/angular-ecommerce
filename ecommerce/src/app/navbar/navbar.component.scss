@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vina+Sans&display=swap');
+
+nav{
+    background-color: rgb(30, 30, 30);
+    padding-block: 15px;
+}
+.brand-name{
+    font-size: 32px;
+    margin-right: 50px;
+    #first-span{
+        color: rgb(80, 200, 120);
+        font-family: 'Vina Sans', cursive;
+    }
+    #second-span{
+        color: rgb(200, 200, 200);
+        font-family: 'Vina Sans', cursive;
+    }
+}
+.navbar-options{
+    font-size: 20px;
+    color: rgb(200, 200, 200);
+}
+.selected-option{
+    color: rgb(80, 200, 120);
+}
