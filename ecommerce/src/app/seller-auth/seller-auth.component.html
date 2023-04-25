@@ -1,34 +1,66 @@
-<form id="sign-up" (ngSubmit)="signUp()">
-    <mat-card>
-        <div id="form-heading">
-            <img mat-card-image src="../../assets/seller.svg" alt="seller">
-            <h2>Seller Registration</h2>
-        </div>
-        <mat-form-field appearance="outline">
-            <mat-label>Registered Seller Name</mat-label>
-            <input matInput type="text" name="sellerName">
-            <mat-error>Seller name is required</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" name="email">
-            <mat-error>Email is required</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>GST Number</mat-label>
-            <input matInput type="text" name="gst">
-            <mat-error>GST number is required</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
-            <input matInput type="password" name="password">
-            <mat-error>Password is required</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Confirm Password</mat-label>
-            <input matInput type="password" name="confrimPassword">
-            <mat-error>Confirmation password is required</mat-error>
-        </mat-form-field>
-        <button mat-raised-button type="submit" color="accent">Register</button>
-    </mat-card>
-</form>
+<div id="sign-up" *ngIf="showSignupForm">
+    <form [formGroup]="sellerRegistrationForm" (ngSubmit)="signUp()">
+        <mat-card>
+            <div id="form-heading">
+                <img mat-card-image src="../../assets/seller.svg" alt="seller">
+                <h2>Seller Registration</h2>
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Registered Seller Name</mat-label>
+                <input matInput type="text" formControlName="sellerName">
+                <mat-error>Seller name is required</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email">
+                <mat-error>Enter a valid email address</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>GST Number</mat-label>
+                <input matInput type="text" formControlName="gst">
+                <mat-error>Enter a valid GST number</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password">
+                <mat-error>Password must be 8 characters long</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput type="password" formControlName="confirmPassword">
+                <mat-error>Password must be 8 characters long</mat-error>
+            </mat-form-field>
+            <br>
+            <button mat-raised-button type="submit" color="accent">Register</button>
+        </mat-card>
+    </form>
+    <div class="switching-text">
+        <span>Already a registered seller? </span><span (click)="toggleForms()" class="second-text">Login</span>
+    </div>
+</div>
+
+<div id="login" *ngIf="!showSignupForm">
+    <form [formGroup]="sellerLoginForm" (ngSubmit)="login()">
+        <mat-card>
+            <div id="form-heading">
+                <img mat-card-image src="../../assets/seller.svg" alt="seller">
+                <h2>Seller Login</h2>
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email">
+                <mat-error>Enter valid email address</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password">
+                <mat-error>Password must be 8 characters long</mat-error>
+            </mat-form-field>
+            <br>
+            <button mat-raised-button type="submit" color="accent">Login</button>
+        </mat-card>
+    </form>
+    <div class="switching-text">
+        <span>Not a registered seller? </span><span (click)="toggleForms()" class="second-text">Signup</span>
+    </div>
+</div>
