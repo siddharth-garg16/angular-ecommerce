@@ -1,5 +1,5 @@
 <div id="sign-up" *ngIf="showSignupForm">
-    <form [formGroup]="sellerRegistrationForm" (ngSubmit)="signUp()">
+    <form #regForm="ngForm" [formGroup]="sellerRegistrationForm" (ngSubmit)="signUp(regForm)">
         <mat-card>
             <div id="form-heading">
                 <img mat-card-image src="../../assets/seller.svg" alt="seller">
@@ -30,6 +30,7 @@
                 <input matInput type="password" formControlName="confirmPassword">
                 <mat-error>Password must be 8 characters long</mat-error>
             </mat-form-field>
+            <span [ngStyle]="{'color':'red'}" *ngIf="arePasswordsDifferent">Entered passwords didn't match</span>
             <br>
             <button mat-raised-button type="submit" color="accent">Register</button>
         </mat-card>
@@ -40,7 +41,7 @@
 </div>
 
 <div id="login" *ngIf="!showSignupForm">
-    <form [formGroup]="sellerLoginForm" (ngSubmit)="login()">
+    <form #logForm [formGroup]="sellerLoginForm" (ngSubmit)="login(logForm)">
         <mat-card>
             <div id="form-heading">
                 <img mat-card-image src="../../assets/seller.svg" alt="seller">

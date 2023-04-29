@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
+import { SellerService } from '../services/seller.service';
+import { SellerInfo } from '../models/seller';
 
 @Component({
   selector: 'app-seller-auth',
@@ -7,8 +9,12 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
   styleUrls: ['./seller-auth.component.scss']
 })
 export class SellerAuthComponent {
+  @ViewChild('regForm') regForm;
+  @ViewChild('logForm') logForm;
 
-  constructor(){}
+  arePasswordsDifferent:boolean = false;
+
+  constructor(private sellerService: SellerService){}
 
   sellerRegistrationForm = new FormGroup({
     sellerName: new FormControl('', [Validators.required]),
@@ -25,17 +31,36 @@ export class SellerAuthComponent {
 
   showSignupForm:boolean = true;
 
-  signUp():void{
-    console.log(this.sellerRegistrationForm.value.sellerName);
-    console.log(this.sellerRegistrationForm.value.email);
-    console.log(this.sellerRegistrationForm.value.gst);
-    console.log(this.sellerRegistrationForm.value.password);
-    //make a http post request after confirming that the password and confirm password are same.
+  signUp(regForm):void{
+    if(this.sellerRegistrationForm.value.password === this.sellerRegistrationForm.value.confirmPassword){
+      this.arePasswordsDifferent = false;
+    } else {
+      this.arePasswordsDifferent = true;
+    }
+
+    delete this.sellerRegistrationForm.value.confirmPassword;
+
+    if(this.sellerRegistrationForm.valid && !this.arePasswordsDifferent){
+      let newUser:SellerInfo = {
+        sellerName:this.sellerRegistrationForm.value.sellerName,
+        email:this.sellerRegistrationForm.value.email,
+        gst:this.sellerRegistrationForm.value.gst,
+        password:this.sellerRegistrationForm.value.password,
+      }
+
+      this.sellerService.sellerSignup(newUser)
+      .subscribe((result)=>{
+        console.log(result);
+        this.regForm.resetForm();
+        this.showSignupForm = false;
+      })
+    } else {
+      //snackbar for invalidity of form fields
+    }
   }
 
-  login():void{
-    console.log(this.sellerLoginForm.value.email);
-    console.log(this.sellerLoginForm.value.password);
+  login(logForm):void{
+    console.log(this.sellerLoginForm.value);
     //redirect to seller portal after confirming the credentials
   }
 
