@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 import { SellerService } from '../services/seller.service';
-import { SellerInfo } from '../models/seller';
+import { SellerInfo, SellerLogin } from '../models/seller';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-seller-auth',
@@ -14,7 +16,10 @@ export class SellerAuthComponent {
 
   arePasswordsDifferent:boolean = false;
 
-  constructor(private sellerService: SellerService){}
+  constructor(
+    private sellerService: SellerService,
+    private snackBar: MatSnackBar,
+    private router: Router){}
 
   sellerRegistrationForm = new FormGroup({
     sellerName: new FormControl('', [Validators.required]),
@@ -50,18 +55,29 @@ export class SellerAuthComponent {
 
       this.sellerService.sellerSignup(newUser)
       .subscribe((result)=>{
-        console.log(result);
         this.regForm.resetForm();
         this.showSignupForm = false;
       })
+      this.snackBar.open("You have successfully registered with us.", "OK");
     } else {
-      //snackbar for invalidity of form fields
+      this.snackBar.open("Unable to register. Please try again.", "Dismiss");
     }
   }
 
   login(logForm):void{
-    console.log(this.sellerLoginForm.value);
-    //redirect to seller portal after confirming the credentials
+    let activeSeller:SellerLogin = {
+      email: this.sellerLoginForm.value.email,
+      password: this.sellerLoginForm.value.password
+    }
+    this.sellerService.sellerLogin(activeSeller).subscribe((result)=>{
+      if(result.length){
+        localStorage.setItem("seller", result[0].sellerName);
+        this.router.navigate(["seller-home"])
+
+      } else {
+        this.snackBar.open("Please check the credentials and try again.", "Dismiss");
+      }
+    })
   }
 
   toggleForms(){

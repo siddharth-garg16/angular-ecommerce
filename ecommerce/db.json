@@ -1,5 +1,11 @@
 {
   "sellers": [
-    
+    {
+      "sellerName": "test",
+      "email": "test@test.com",
+      "gst": "123456789qwerty",
+      "password": "password",
+      "id": 1
+    }
   ]
 }
